@@ -3,6 +3,8 @@ import logo from '../logo.svg';
 import CommentList from './CommentList.js'
 import CommentForm from './CommentForm.js'
 import data from '../lib/data.js'
+import {BrowserRouter as Router, Route } from 'react-router-dom';
+import ParentComment from './ParentComment';
 
 class App extends Component {
   state = { data: [] }
@@ -59,13 +61,24 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <CommentList
-          data={this.state.data}
-          showReplies={this.showReplies}
-        />
-        <CommentForm onSubmit={this.handleCommentSubmit}/>
-      </div>
+      <Router>
+        <div className="App">
+        <Route exact path="/" render={() => (
+          <div>
+            <CommentList
+              data={this.state.data}
+              showReplies={this.showReplies}
+            />
+            <CommentForm onSubmit={this.handleCommentSubmit}/>
+          </div>
+        )}/>
+        <Route path="/comments/:id" render={(props) => {
+          const id = props.match.params.id;
+          const comment = this.state.data.find((c) => c.id === id);
+          return <ParentComment comment={comment}/>
+        }}/>
+        </div>
+      </Router>
     );
   }
 }

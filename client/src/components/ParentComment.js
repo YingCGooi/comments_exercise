@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Comment from './Comment.js'
-import ReplyList from './ReplyList.js'
+import ReplyList from './ReplyList.js';
+import {Link} from 'react-router-dom';
 
 class ParentComment extends Component {
   render() {
@@ -8,6 +9,9 @@ class ParentComment extends Component {
     return (
       <div className="parent-comment">
         <Comment { ...commentWithoutReplies } />
+        <Link to={`/comments/${this.props.comment.id}`}>
+          Show Comment
+        </Link>
         <ReplyList
           repliesCount={ replies_count}
           replies={ replies }
