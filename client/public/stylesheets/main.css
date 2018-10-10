@@ -43,3 +43,7 @@ input, textarea {
 a.show-more {
   color: #5566cc;
 }
+
+.invisible {
+  display: none;
+}
