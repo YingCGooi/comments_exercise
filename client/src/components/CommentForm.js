@@ -19,7 +19,7 @@ class CommentForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state.fields);
-    this.setState({author: '', body: ''})
+    this.setState({fields: {author: '', body: ''}})
   };
 
   render() {
