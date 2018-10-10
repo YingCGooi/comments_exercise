@@ -11,12 +11,14 @@ const data = Array(10)
               .fill(null)
               .map(_ => {
                 const comment_id = uuidv4();
+                const replies_count = randomNum(1, 5);
                 return {
                   id: comment_id,
                   author: `${faker.name.firstName()} ${faker.name.lastName()}`,
                   body: [faker.lorem.paragraph, faker.lorem.sentence][randomNum(0, 1)].call(),
                   postedAt: +faker.date.recent(),
-                  replies: Array(randomNum(1, 5))
+                  replies_count: replies_count,
+                  replies: Array(replies_count)
                             .fill(null)
                             .map(() => ({
                               id: uuidv4(),

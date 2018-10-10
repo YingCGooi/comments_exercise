@@ -20,7 +20,7 @@ app.get('/api/comment_replies', (req, res) => {
 });
 
 app.post('/api/comments', (req, res) => {
-  const { comment } = req.params;
+  const { comment } = req.body;
   const newComment = data.saveComment(comment);
   if (newComment) {
     res.json(newComment);
@@ -30,7 +30,7 @@ app.post('/api/comments', (req, res) => {
 });
 
 app.post('/api/comment_replies', (req, res) => {
-  const comment_id = +req.params.comment_id;
+  const comment_id = req.query.comment_id;
 
   const { comment_reply } = req.params;
   const newReply = data.saveReplyToComment(comment_id, reply);
