@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import moment from 'moment';
 
 class Comment extends Component {
   render() {
@@ -10,7 +11,7 @@ class Comment extends Component {
         </div>
         <div className="header">
           <h3 className="author">{this.props.author}</h3>
-          <span>{this.props.postedAt}</span>
+          <span>{ moment(props.postedAt).fromNow() }</span>
         </div>
         <p>{this.props.body}</p>
       </div>
