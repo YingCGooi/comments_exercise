@@ -30,7 +30,18 @@ class App extends Component {
           data: updatedData,
         });
     });
-  }
+  };
+
+  handleCommentSubmit = (commentFields) => {
+    global.fetch(`/api/comments`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({comment: commentFields})
+    }).then(response => response.json())
+      .then(comment => this.setState({data: this.state.data.concat(comment)}));
+  };
 
   componentDidMount() {
     const self = this;
@@ -53,7 +64,7 @@ class App extends Component {
           data={this.state.data}
           showReplies={this.showReplies}
         />
-        <CommentForm />
+        <CommentForm onSubmit={this.handleCommentSubmit}/>
       </div>
     );
   }
