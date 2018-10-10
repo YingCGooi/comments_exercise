@@ -17,17 +17,17 @@ class ReplyList extends Component {
         { ...reply}
       />
     ))
-    const invisible = this.props.replies.length === this.props.repliesCount ? 'invisible' : '';
-    
+    const buttonVisable = this.props.replies.length < this.props.repliesCount;
+
     return (
       <div className="replies">
         {replies}
-        <a href="#"
-           className={`show_more ${invisible}`}
+        {buttonVisable ? <a href="#"
+           className={`show_more`}
            onClick={this.handleClick}
         >
           Show More Replies ({this.props.repliesCount - 1})
-        </a>
+        </a> : ''}
       </div>
     );
   }
