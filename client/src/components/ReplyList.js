@@ -4,9 +4,7 @@ import Comment from './Comment.js'
 class ReplyList extends Component {
   handleClick = (e) => {
     e.preventDefault();
-
-    const commentId = this.props.replies[0].comment_id;
-
+    const commentId = this.props.comment_id;
     this.props.showReplies(commentId);
   }
 
