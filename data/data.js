@@ -7,7 +7,7 @@ const DATA_FILE_PATH = path.join(__dirname, 'comments.json');
 const data = {
   getCommentsWithOneReply: () => {
     const comments = JSON.parse(readFileSync(DATA_FILE_PATH));
-    return comments.map((c) => Object.assign({}, c, {replies: c.replies.slice(0, 1), replies_count: c.replies.length}));
+    return comments.map((c) => Object.assign({}, c, {replies: c.replies.slice(0, 1)}));
   },
 
   getRepliesForComment: (id) => {

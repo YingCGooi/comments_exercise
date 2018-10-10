@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import moment from 'moment';
 
 class Comment extends Component {
   render() {
+    const { id, author, postedAt, body } = this.props;
     return (
-      <div className="comment" id={this.props.id}>
+      <div className="comment" id={id}>
         <hr />
         <div className="image">
           <img src="/images/no-user-image.gif" alt=""/>
         </div>
         <div className="header">
-          <h3 className="author">{this.props.author}</h3>
-          <span>{this.props.postedAt}</span>
+          <h3 className="author">{author}</h3>
+          <span>{ moment(postedAt).fromNow() }</span>
         </div>
-        <p>{this.props.body}</p>
+        <p>{body}</p>
       </div>
     );
   }

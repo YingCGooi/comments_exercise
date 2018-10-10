@@ -12,6 +12,7 @@ class ParentComment extends Component {
           repliesCount={ replies_count}
           replies={ replies }
           showReplies={this.props.showReplies}
+          comment_id={this.props.comment.id}
         />
       </div>
     );
