@@ -15,4 +15,11 @@ describe('Comment', () => {
     const wrapper = shallow(<Comment {...comment}/>);
     expect(wrapper.find('h3').text()).toEqual(comment.author);
   });
+
+  it('renders an image tag', () => {
+    const wrapper = shallow(<Comment {...comment}/>);
+    expect(wrapper.containsMatchingElement(
+      <img />
+    )).toBe(true);
+  });
 });

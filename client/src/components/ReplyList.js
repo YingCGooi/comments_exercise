@@ -20,7 +20,8 @@ class ReplyList extends Component {
     return (
       <div className="replies">
         {replies}
-        {buttonVisable ? <a href="#"
+        {buttonVisable ? 
+        <a href="#"
            className={`show_more`}
            onClick={this.handleClick}
         >
