@@ -1,12 +1,28 @@
 import React, { Component } from 'react'
-import Comment from './Comment.js'
+import Comment from './Comment.js';
+import store from '../store';
 
 class ReplyList extends Component {
   handleClick = (e) => {
     e.preventDefault();
     const commentId = this.props.comment_id;
-    this.props.showReplies(commentId);
-  }
+
+    fetch(`/api/comment_replies?comment_id=${commentId}`)
+      .then((response) => response.json())
+      .then((replies) => {
+        // const updatedComments = this.state.comments.map(comment => {
+        //   if (comment.id === commentId) {
+        //     return Object.assign({}, comment, {
+        //       replies: comment.replies.concat(replies)
+        //     });
+        //   } else {
+        //     return comment;
+        //   }
+        // });
+
+        store.dispatch({type: 'REPLIES_RECEIVED', replies, commentId})
+    });
+  };
 
   render() {
     const replies = this.props.replies.map(reply => (
@@ -20,7 +36,7 @@ class ReplyList extends Component {
     return (
       <div className="replies">
         {replies}
-        {buttonVisable ? 
+        {buttonVisable ?
         <a href="#"
            className={`show_more`}
            onClick={this.handleClick}

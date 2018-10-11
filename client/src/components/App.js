@@ -1,37 +1,11 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
-import CommentList from './CommentList.js'
-import CommentForm from './CommentForm.js'
-import data from '../lib/data.js'
+import CommentList from './CommentList.js';
+import CommentForm from './CommentForm.js';
+import store from '../store';
+import {Provider} from 'react-redux';
 
 class App extends Component {
-  state = { data: [] }
-
-  showReplies = (commentId) => {
-    const self = this;
-
-    fetch(`/api/comment_replies?comment_id=${commentId}`)
-      .then(function(response) {
-        console.log(response);
-        return response.json();
-      })
-      .then(function(replies) {
-        const updatedData = self.state.data.map(comment => {
-          if (comment.id === commentId) {
-            return Object.assign({}, comment, {
-              replies: comment.replies.concat(replies)
-            });
-          } else {
-            return comment;
-          }
-        });
-
-        self.setState({
-          data: updatedData,
-        });
-    });
-  };
-
   handleCommentSubmit = (commentFields) => {
     global.fetch(`/api/comments`, {
       method: 'POST',
@@ -40,32 +14,35 @@ class App extends Component {
       },
       body: JSON.stringify({comment: commentFields})
     }).then(response => response.json())
-      .then(comment => this.setState({data: this.state.data.concat(comment)}));
+      .then(comment => this.setState({comments: this.state.comments.concat(comment)}));
   };
 
   componentDidMount() {
-    const self = this;
+    store.subscribe(() => {
+      this.forceUpdate();
+    });
 
     fetch('/api/comments')
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(comments) {
-        self.setState({
-          data: comments,
-        });
+      .then((response) => response.json())
+      .then((comments) => {
+
+        store.dispatch({ type: 'COMMENTS_RECEIVED', comments: comments });
+        console.log(store.getState());
     });
   }
 
   render() {
+    const comments = store.getState().comments;
     return (
-      <div className="App">
-        <CommentList
-          data={this.state.data}
-          showReplies={this.showReplies}
-        />
-        <CommentForm onSubmit={this.handleCommentSubmit}/>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+            <CommentList
+              comments={comments}
+              showReplies={this.showReplies}
+            />
+            <CommentForm onSubmit={this.handleCommentSubmit}/>
+        </div>
+      </Provider>
     );
   }
 }

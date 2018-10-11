@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import ParentComment from './ParentComment.js'
+import ParentCommentContainer from './ParentCommentContainer.js'
 
 class CommentList extends Component {
   render() {
-    const ParentCommentList = this.props.data.map((comment) => {
-      return <ParentComment
+    const ParentCommentContainerList = this.props.comments.map((comment) => {
+      return <ParentCommentContainer
                 comment={comment}
                 key={comment.id}
                 showReplies={this.props.showReplies}
@@ -12,8 +12,8 @@ class CommentList extends Component {
     });
     return (
       <div className="comments">
-        <h2>Comments ({this.props.data.length})</h2>
-        {ParentCommentList}
+        <h2>Comments ({this.props.comments.length})</h2>
+        {ParentCommentContainerList}
       </div>
     );
   }
